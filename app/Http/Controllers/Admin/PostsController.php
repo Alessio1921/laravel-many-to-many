@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Post;
+use Illuminate\Support\Facades\Auth;
+use App\Category;
+
 
 class PostsController extends Controller
 {
@@ -26,7 +30,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin/posts/create');
     }
 
     /**
@@ -37,7 +41,17 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $newPost = new Post();
+        $newPost->title = $data["title"];
+        $newPost->user = Auth::user()->name;
+        $newPost->description = $data["description"];
+        $newPost->url = $data["url"];
+        $newPost->slug = Str::slug($data["title"],"-");
+        $newPost->save();
+
+        return redirect()->route("admin.posts.show", $newPost->id);
     }
 
     /**

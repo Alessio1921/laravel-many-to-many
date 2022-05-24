@@ -6,8 +6,8 @@
       <div class="col-md-8">   
         <div class="cardcontainer my-4">
           <p class="txt m-0">{{$post->user}}</p>
-          <div class="photo">
-            <img src="{{ $post->url}}">
+          <div class="photo w-75 mx-auto">
+            <img class="w-100" src="{{ $post->url}}">
           </div>
           <div class="content border-bottom border-2 pb-4">
             <p>{{ ucfirst($post->title)}}</p>
