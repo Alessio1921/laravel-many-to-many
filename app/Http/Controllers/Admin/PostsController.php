@@ -30,7 +30,8 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('admin/posts/create');
+        $categories= Category::All();
+        return view('admin/posts/create', compact("categories"));
     }
 
     /**
@@ -41,8 +42,12 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'unique:posts|required|max:20',
+            'description' => 'required|min:10',
+        ]);
         $data = $request->all();
-
+        // @dd($data);
         $newPost = new Post();
         $newPost->title = $data["title"];
         $newPost->user = Auth::user()->name;
@@ -50,6 +55,7 @@ class PostsController extends Controller
         $newPost->url = $data["url"];
         $newPost->slug = Str::slug($data["title"],"-");
         $newPost->save();
+        $newPost->categories()->sync($data['category_id']);
 
         return redirect()->route("admin.posts.show", $newPost->id);
     }
@@ -68,24 +74,36 @@ class PostsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param   $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view("admin/posts/edit",compact("post"));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Post $post)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:20',
+            'description' => 'required|min:2',
+        ]);
+        $data = $request->all();
+
+        $post->title = $data["title"];
+        $post->description = $data["description"];
+        $post->url = $data["url"];
+        $post->slug = Str::slug($data["title"],"-");
+        $post->save();
+
+        return redirect()->route("admin.posts.show", $post->id);
     }
 
     /**
@@ -94,8 +112,11 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Post $post)
+    {   
+        // @dd($post->categories());
+        // $post->categories()->delete();
+        $post->delete();
+        return redirect()->route('admin.posts.index',compact("post"))->with("message","$post->title è stato eliminato con successo!");    
     }
 }

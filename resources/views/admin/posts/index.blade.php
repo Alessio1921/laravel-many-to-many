@@ -3,6 +3,19 @@
 @section('content')
 <div class="container text-center">
     <div class="row justify-content-center">
+      <div class="col-12">
+        @if (session("message"))
+          <div class="alert alert-success">
+              {{session("message")}}
+          </div>
+        @endif
+      </div>
+      <div class="col-12">
+        <a href="{{route("admin.posts.create")}}">
+          <button class="btn btn-outline-primary">
+            Crea un nuovo Post
+          </button>
+        </a>
       @foreach ($posts as $post)
         <div class="cardcontainer my-4">
           <p class="txt m-0">{{$post->user}}</p>
@@ -15,6 +28,11 @@
             <a href="{{route("admin.posts.show", $post)}}">
               <button class="btn btn-outline-primary mx-auto">Read More</button>
             </a>
+            <form action="{{route("admin.posts.destroy", $post)}}" method="POST">
+              @csrf
+              @method("DELETE")
+              <button class="btn btn-outline-danger mx-auto mt-2" type="submit">Elimina</button>
+            </form>
           </div>
         </div>
       @endforeach

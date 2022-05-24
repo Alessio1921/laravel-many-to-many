@@ -28,7 +28,15 @@
             </textarea>
         </div>
         <div class="col-12">
-            <button class="btn btn-outline-primary">send</button>
+            <select class="form-select" aria-label="Default select example" name="category_id">
+                <option selected disabled>Scegli una categoria</option>
+                @foreach ($categories as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-outline-primary" type="submit">send</button>
         </div>
         </form>
     </div>
