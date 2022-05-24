@@ -48,8 +48,6 @@ class PostsController extends Controller
      */
     public function show(Post $post)
     {
-        // dd($slug);
-        // $posts = Post::where("slug", $slug)->get();
         return view('admin/posts/show',compact("post"));
     }
 

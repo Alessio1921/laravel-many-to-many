@@ -11,6 +11,9 @@
           </div>
           <div class="content border-bottom border-2 pb-4">
             <p>{{ ucfirst($post->title)}}</p>
+            @foreach ($post->categories as $category)
+              <p>{{$category->name }}</p>
+            @endforeach
             <p>{{ $post->created_at}}</p>
             <p>{{$post->description}}</p>
             <a href="{{route("admin.posts.index")}}">
