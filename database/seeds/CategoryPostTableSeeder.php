@@ -6,7 +6,7 @@ use App\Category;
 use App\Post;
 
 
-class category_postTableSeeder extends Seeder
+class CategoryPostTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

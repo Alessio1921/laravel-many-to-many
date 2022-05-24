@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container text-center">
     <div class="row justify-content-center">
       <div class="col-md-8">   
@@ -16,8 +17,11 @@
             @endforeach
             <p>{{ $post->created_at}}</p>
             <p>{{$post->description}}</p>
+            <a href="{{route("admin.posts.edit",$post)}}">
+              <button class="btn btn-outline-primary mx-auto">Modifica</button>
+            </a>
             <a href="{{route("admin.posts.index")}}">
-              <button class="btn btn-outline-primary mx-auto">Back</button>
+              <button class="btn btn-outline-danger mx-auto">Back</button>
             </a>
           </div>
         </div>

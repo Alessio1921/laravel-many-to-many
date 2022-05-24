@@ -47,7 +47,7 @@ class PostsController extends Controller
             'description' => 'required|min:10',
         ]);
         $data = $request->all();
-        // @dd($data);
+
         $newPost = new Post();
         $newPost->title = $data["title"];
         $newPost->user = Auth::user()->name;
@@ -68,7 +68,7 @@ class PostsController extends Controller
      */
     public function show(Post $post)
     {
-        return view('admin/posts/show',compact("post"));
+        return view('admin.posts.show',compact("post"));
     }
 
     /**
@@ -79,7 +79,8 @@ class PostsController extends Controller
      */
     public function edit(Post $post)
     {
-        return view("admin/posts/edit",compact("post"));
+        $categories = Category::all();
+        return view("admin/posts/edit",compact("post", "categories"));
     }
 
     /**
@@ -101,6 +102,7 @@ class PostsController extends Controller
         $post->description = $data["description"];
         $post->url = $data["url"];
         $post->slug = Str::slug($data["title"],"-");
+        $post->categories()->sync($data['category_id']);
         $post->save();
 
         return redirect()->route("admin.posts.show", $post->id);
@@ -114,8 +116,6 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {   
-        // @dd($post->categories());
-        // $post->categories()->delete();
         $post->delete();
         return redirect()->route('admin.posts.index',compact("post"))->with("message","$post->title è stato eliminato con successo!");    
     }
