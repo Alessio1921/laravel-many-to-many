@@ -1,3 +1,5 @@
+I used all the crud and connected tables, post and category, many to many
+
 <img width="1423" alt="Schermata 2022-06-07 alle 14 19 05" src="https://user-images.githubusercontent.com/95136261/172377652-1a91a80c-6e4e-4209-a727-4b9f3c2001b8.png">
 <img width="1423" alt="Schermata 2022-06-07 alle 14 19 10" src="https://user-images.githubusercontent.com/95136261/172377676-e264dc3c-44fd-4e1c-88ff-a65f837ce232.png">
 <img width="1423" alt="Schermata 2022-06-07 alle 14 19 18" src="https://user-images.githubusercontent.com/95136261/172377681-f7471b8b-94dc-4dc6-8d61-2472d982e4f5.png">
